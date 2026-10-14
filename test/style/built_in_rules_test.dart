@@ -23,6 +23,7 @@ import 'package:inspectra/src/style/rules/license_header_rule.dart';
 import 'package:inspectra/src/style/rules/no_comments_rule.dart';
 import 'package:inspectra/src/style/rules/no_default_case_rule.dart';
 import 'package:inspectra/src/style/rules/no_else_rule.dart';
+import 'package:inspectra/src/style/rules/no_late_rule.dart';
 import 'package:inspectra/src/style/rules/no_wildcard_case_rule.dart';
 import 'package:inspectra/src/style/rules/one_public_type_per_file_rule.dart';
 import 'package:inspectra/src/style/rules/one_type_per_file_rule.dart';
@@ -110,6 +111,50 @@ int h(Object a) => switch (a) { int() => 1, _ => 0 };
         check(const NoWildcardCaseRule(), source).map((v) => v.line),
         <int>[13, 17],
       );
+    });
+  });
+
+  group('no_late', () {
+    test('reports a late field, a late top level and a late local', () {
+      const source = '''
+late final int top = 1;
+
+class Sample {
+  late final int field = 2;
+  late int pending;
+
+  void run() {
+    late final int local;
+    local = 3;
+  }
+}
+''';
+
+      expect(check(const NoLateRule(), source).map((v) => v.line), <int>[
+        1,
+        4,
+        5,
+        8,
+      ]);
+    });
+
+    test('accepts variables without late and late as a plain name', () {
+      const source = '''
+final int top = 1;
+
+void run() {
+  final late = 2;
+  final int later = late;
+}
+''';
+
+      expect(check(const NoLateRule(), source), isEmpty);
+    });
+
+    test('is part of strict only', () {
+      expect(StylePreset.strict.ruleIds, contains('no_late'));
+      expect(StylePreset.recommended.ruleIds, isNot(contains('no_late')));
+      expect(StylePreset.none.ruleIds, isNot(contains('no_late')));
     });
   });
 

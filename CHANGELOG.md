@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file. The format foll
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## 2.1.0
+
+### Style check
+
+- `no_late`, a built-in rule that reports the `late` modifier of every field, top level and local
+  variable, so that no read can fail with a `LateInitializationError`. It is part of the `strict`
+  preset, so a package on `strict` reports its `late` variables after the update;
+  `rules: {no_late: false}` switches it off. Ported from the custom rule of Essentia.
+
 ## 2.0.0
 
 ### Baseline
