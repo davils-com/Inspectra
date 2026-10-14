@@ -12,6 +12,11 @@ All notable changes to this project are documented in this file. The format foll
   variable, so that no read can fail with a `LateInitializationError`. It is part of the `strict`
   preset, so a package on `strict` reports its `late` variables after the update;
   `rules: {no_late: false}` switches it off. Ported from the custom rule of Essentia.
+- `no_platform_imports`, a built-in rule that reports every platform library - `dart:io`,
+  `dart:ffi`, `dart:html`, `dart:js_interop` and the others - a file under `lib/` imports or exports,
+  unless the file is a variant of a conditional import (`_io`, `_native`, `_web`); `dart:mirrors`
+  is refused everywhere. It is part of no preset and is switched on with
+  `rules: {no_platform_imports: true}`. Ported from the custom rule of Cryptia.
 
 ## 2.0.0
 

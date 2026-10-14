@@ -288,6 +288,9 @@
             },
             "no_late": {
               "type": "boolean"
+            },
+            "no_platform_imports": {
+              "type": "boolean"
             }
           }
         },
