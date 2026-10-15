@@ -6,6 +6,15 @@ All notable changes to this project are documented in this file. The format foll
 
 ## 2.1.0
 
+### Coverage
+
+- `coverage.merge`, further test runs whose coverage is merged into the report, each with a `name` and its
+  `test_arguments`, such as the tests of a preset or the tests in a browser; every layer adds its runs. The hits of
+  the VM add up; the hits of a browser, which only reports the lines that ran, count only for lines a VM run knows.
+  A file only a browser loaded is listed in the new `CoverageReport.browserOnly`, and as `browserOnly` in the JSON of
+  the coverage section, and is not counted. A suite a run skips as a whole, such as one whose tag is skipped, writes
+  a report without hits, which is left out. The public `CoverageRun`, `CoverageHits` and `mergeCoverageHits`.
+
 ### Style check
 
 - `no_late`, a built-in rule that reports the `late` modifier of every field, top level and local
